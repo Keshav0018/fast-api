@@ -1,0 +1,14 @@
+from .utilis import *
+from ..routers.auth import get_db
+from ..routers.auth import authenticate_user
+
+
+app.dependency_overrides[get_db] = override_get_db
+
+def test_authenticate_user(test_user):
+    db = TestingSessionLocal()
+
+    authenticated_user = authenticate_user(test_user.username,'1234',db)
+    assert authenticated_user is not None
+    assert authenticated_user.username == test_user.username
+
